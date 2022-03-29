@@ -19,13 +19,14 @@ export function Navbar() {
       borderBottomColor={useColorModeValue('gray.100', 'gray.700')}
       mb={4}
     >
-      <HStack py={4} justifyContent='flex-end' maxW='container.lg' mx='auto'>
+      <HStack py={4} justifyContent='end' mx={'2vw'} >
         <Navlink to='/' name='Firbase Authentication' size='lg' />
         <Spacer />
+        <Navlink to='/protected-page' name='Features' />
         <Navlink to='/login' name='Login' />
         <Navlink to='/register' name='Register' />
         <Navlink to='/profile' name='Profile' />
-        <Navlink to='/protected-page' name='Protected' />
+       
         <Navlink
           to='/logout'
           name='Logout'
