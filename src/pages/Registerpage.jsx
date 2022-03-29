@@ -19,13 +19,14 @@ import { useAuth } from '../contexts/AuthContext'
 import useMounted from '../hooks/useMounted'
 
 export default function Registerpage() {
+  const { currentUser } = useAuth()
   const history = useHistory()
   const { signInWithGoogle, register } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
-  const mounted =useMounted()
+  const mounted = useMounted()
 
   return (
     <Layout>
@@ -43,12 +44,16 @@ export default function Registerpage() {
                 duration: 9000,
                 isClosable: true,
               })
-              
+
             }
             // your register logic here
             setIsSubmitting(true)
             register(email, password)
-              .then(res=>(console.log(res)))
+              .then((res) => {
+                
+              }
+
+              )
               .catch(error => {
                 console.log(error.message)
                 toast({
@@ -58,7 +63,7 @@ export default function Registerpage() {
                   isClosable: true,
                 })
               })
-              .finally( mounted.current&&setIsSubmitting(false))
+              .finally(mounted.current && setIsSubmitting(false))
           }}
         >
           <Stack spacing='6'>

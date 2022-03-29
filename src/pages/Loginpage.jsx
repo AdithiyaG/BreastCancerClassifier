@@ -21,6 +21,7 @@ import useMounted from '../hooks/useMounted'
 
 export default function Loginpage() {
   const history = useHistory()
+  const location = useLocation()
   const { signInWithGoogle, login } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -30,13 +31,17 @@ export default function Loginpage() {
 
 
 
-
-  
+  function handleRedirectToOrBack() {
+    // console.log(location?.state)
+    history.replace(location.state?.from ?? '/')
     // if (location.state) {
     //   history.replace(location.state?.from)
     // } else {
     //   history.replace('/profile')
     // }
+  }
+  
+  
    return (
     <Layout>
       <Heading textAlign='center' my={12}>
@@ -60,7 +65,7 @@ export default function Loginpage() {
             login(email, password)
               .then(res => {
                console.log(res)
-               history.push('/')
+               handleRedirectToOrBack()
               })
               .catch(error => {
                 console.log(error.message)
