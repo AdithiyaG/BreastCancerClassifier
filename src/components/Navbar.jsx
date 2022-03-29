@@ -9,9 +9,11 @@ import {
 import React from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import Navlink from './Navlink'
+import {useAuth} from '../contexts/AuthContext'
 
 export function Navbar() {
   const { toggleColorMode } = useColorMode()
+  const {currentUser,logout} =useAuth()
 
   return (
     <Box
@@ -22,26 +24,20 @@ export function Navbar() {
       <HStack py={4} justifyContent='end' mx={'2vw'} >
         <Navlink to='/' name='Firbase Authentication' size='lg' />
         <Spacer />
-        <Navlink to='/protected-page' name='Features' />
-        <Navlink to='/login' name='Login' />
-        <Navlink to='/register' name='Register' />
-        <Navlink to='/profile' name='Profile' />
-       
-        <Navlink
-          to='/logout'
-          name='Logout'
-          onClick={async e => {
-            e.preventDefault()
-            // handle logout
-            alert('logout user')
-          }}
-        />
-        <IconButton
-          variant='outline'
-          icon={useColorModeValue(<FaSun />, <FaMoon />)}
-          onClick={toggleColorMode}
-          aria-label='toggle-dark-mode'
-        />
+        {!currentUser && <Navlink to='/login' name='Login' />}
+        {!currentUser && <Navlink to='/register' name='Register' />}
+        {currentUser && <Navlink to='/profile' name='Profile' />}
+        {currentUser && (
+          <Navlink
+            to='/logout'
+            name='Logout'
+            onClick={async e => {
+              e.preventDefault()
+              await logout()
+            }}
+          />
+        )}
+   
       </HStack>
     </Box>
   )
