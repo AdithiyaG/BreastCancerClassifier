@@ -8,77 +8,63 @@ import {
   OrderedList,
   Tag,
   Text,
+  Image,Button,Container,Stack
 } from '@chakra-ui/react'
 import React from 'react'
 import { Layout } from '../components/Layout'
 import { Link } from 'react-router-dom'
 import {useAuth} from '../contexts/AuthContext.js'
+import medium from '../media/4.png'
 
 export default function Homepage() {
   const { currentUser} =useAuth()
   return (
     <Layout>
-      <Heading>Home page</Heading>
-      <Text my={6}>{`Current User:${currentUser}`}</Text>
-
-      <Heading>
-        Firebase Authentication
-        <chakra.span
-          fontWeight='black'
-          fontStyle='italic'
-          fontSize='9xl'
-          mx={2}
-        >
-          v9
-        </chakra.span>
-        <Badge
-          fontWeight='black'
-          fontSize='4xl'
-          mx={2}
-          px={2}
-          colorScheme='green'
-        >
-          NEW API
-        </Badge>
-      </Heading>
-      <OrderedList fontSize='3xl' my={4}>
-        <ListItem>Email password authentication (Register/Login)</ListItem>
-        <ListItem>Google Sign in</ListItem>
-        <ListItem>Forgot Password</ListItem>
-        <ListItem>Custom Reset password page</ListItem>
-        <ListItem>Protected routes</ListItem>
-        <ListItem>
-          <Code fontSize='inherit'> Redirect TO</Code> or Back (keeping the
-          state)
-        </ListItem>
-        <ListItem>
-          custom Auth Hook <Code fontSize='3xl'>useAuth()</Code>
-        </ListItem>
-        <ListItem>Loading indicators while sign-in/up</ListItem>
-        <ListItem>
-          Dark Mode enabled template using
-          <Badge
-            fontSize='inherit'
-            colorScheme='teal'
-            mx={2}
-            textTransform='capitalize'
-            borderRadius='md'
-          >
-            Chakra UI
-          </Badge>
-        </ListItem>
-      </OrderedList>
-      <Heading size='md' mt={20}>
-        Some other links (only for reference):
-      </Heading>
-      <List>
-        <ListItem>
-          <Link to='/reset-password'>reset page</Link>
-        </ListItem>
-        <ListItem>
-          <Link to='/forgot-password'>forgot page</Link>
-        </ListItem>
-      </List>
+     
+      <Container maxW={'5xl'}>
+        <Stack
+          textAlign={'center'}
+          align={'center'}
+          spacing={{ base: 8, md: 10 }}
+          py={{ base: 20, md: 28 }}>
+             <Image src={medium} />
+          <Heading
+            fontWeight={600}
+            fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
+            lineHeight={'110%'}>
+           BreastCancer Classification{' '}
+            <Text as={'span'} color={'primary.300'}>
+              made easy
+            </Text>
+          </Heading>
+          
+          <Text color={'gray.500'} maxW={'3xl'}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+optio, eaque rerum! 
+          </Text>
+          <Stack spacing={6} direction={'row'}>
+            <Button
+              rounded={'full'}
+              px={6}
+              colorScheme={'pink'}
+              bg={'primary.100'}
+              _hover={{ bg: 'yellow.300' }}>
+              Get started
+            </Button>
+            <Button rounded={'full'} px={6}>
+              Learn more
+            </Button>
+          </Stack>
+          {/* <Flex w={'full'}>
+            <Illustration
+              height={{ sm: '24rem', lg: '28rem' }}
+              mt={{ base: 12, sm: 16 }}
+            />
+          </Flex> */}
+        </Stack>
+      </Container>
     </Layout>
   )
 }

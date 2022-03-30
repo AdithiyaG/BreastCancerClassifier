@@ -31,7 +31,7 @@ export default function Registerpage() {
   return (
     <Layout>
       <Heading textAlign='center' my={12}>
-        Register
+        SignUp
       </Heading>
       <Card maxW='md' mx='auto' mt={4}>
         <chakra.form
@@ -91,7 +91,7 @@ export default function Registerpage() {
             </FormControl>
             <Button
               type='submit'
-              colorScheme='pink'
+              bg={'primary.100'}
               size='lg'
               fontSize='md'
               isLoading={isSubmitting}
@@ -109,7 +109,7 @@ export default function Registerpage() {
         <Button
           variant='outline'
           isFullWidth
-          colorScheme='red'
+          bg={'gray.200'}
           leftIcon={<FaGoogle />}
           onClick={() =>
             signInWithGoogle()
@@ -117,7 +117,7 @@ export default function Registerpage() {
               .catch(e => console.log(e.message))
           }
         >
-          Sign in with Google
+          Sign Up with Google
         </Button>
       </Card>
     </Layout>

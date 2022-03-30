@@ -111,12 +111,12 @@ export default function Loginpage() {
             {/* <PasswordField /> */}
             <Button
               type='submit'
-              colorScheme='pink'
+              bg='primary.100'
               size='lg'
               fontSize='md'
               isLoading={isSubmitting}
             >
-              Sign in
+              Log in
             </Button>
           </Stack>
         </chakra.form>
@@ -130,9 +130,9 @@ export default function Loginpage() {
         </HStack>
         <DividerWithText my={6}>OR</DividerWithText>
         <Button
-          variant='outline'
+          variant='ghost'
           isFullWidth
-          colorScheme='red'
+          bg={'gray.200'}
           leftIcon={<FaGoogle />}
           onClick={() =>
             signInWithGoogle()
@@ -143,7 +143,7 @@ export default function Loginpage() {
               .catch(e => console.log(e.message))
           }
         >
-          Sign in with Google
+          Log In with Google
         </Button>
       </Card>
     </Layout>

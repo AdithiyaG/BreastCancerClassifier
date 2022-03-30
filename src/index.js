@@ -14,7 +14,9 @@ const customTheme = extendTheme({
     useSystemColorMode: false,
   },
   colors: {
-    primary: theme.colors.pink,
+    primary: {
+      100:'#FFCB2B'
+    },
   },
 })
 

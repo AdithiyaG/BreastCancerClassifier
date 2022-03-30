@@ -18,15 +18,23 @@ import Results from "../components/Results"
 import { auth } from '../utils/firebaseconfig'
 import axios from 'axios';
 import {useAuth} from '../contexts/AuthContext.js'
-
+import {useDropzone} from 'react-dropzone';
+import Dropzone from "react-dropzone";
 
 const Model=()=>{
 
+ 
+  
   const [pname,setPname] =useState("");
   const [pid,setPid] =useState("");
   const [Image,setImage] =useState(null);
+  const [age,setAge]=useState("");
+  const [height,setHeight]=useState("");
+  const [dose,setDose]=useState(""); 
   const [showResults, setShowResults] = useState(false)
   const { currentUser} =useAuth()
+
+  
 
   const onSumbit= ()=>{
     setShowResults(true);
@@ -77,16 +85,15 @@ const Model=()=>{
      <Stack  ml={'5vw'} mr={'30%'} my='2%' >
 
       <Stack>
-          <Flex>
+          
               <Heading fontSize={'4xl'} textAlign={'left'} mb={'2vw'}>
               Classifier
             </Heading>
-            <Spacer />
-            <Link href='/table' alignItems={'self-end'}>Patient Database</Link>
-          </Flex>
+  
+        
 
 
-      <Box spacing={5} borderWidth='1px' borderRadius='lg' p={'3%'}  >  
+      <Box spacing={10} borderWidth='1px' borderRadius='lg' p={'3%'}  >  
               <FormControl id="pname" >
               <FormLabel>Patient Name</FormLabel>
               <Input type="text" value={pname} name="pname" onChange={(e) => setPname(e.target.value)}/>
@@ -95,20 +102,43 @@ const Model=()=>{
               <FormLabel>Patient ID</FormLabel>
                     <Input type="text" value={pid} name="pid" onChange={(e) => setPid(e.target.value)}/>
                   </FormControl>
+
+                  <FormControl id="age" >
+              <FormLabel>Patient Age</FormLabel>
+                    <Input type="text" value={age} name="age" onChange={(e) => setAge(e.target.value)}/>
+                  </FormControl>
+                  
+                  <FormControl id="height" >
+              <FormLabel>Patient Height</FormLabel>
+                    <Input type="text" value={height} name="height" onChange={(e) => setHeight(e.target.value)}/>
+                  </FormControl>
+
+                  <FormControl id="dose" >
+              <FormLabel>BSA dosing</FormLabel>
+                    <Input type="text" value={dose} name="dose" onChange={(e) => setDose(e.target.value)}/>
+                  </FormControl>
+
+
+
                   <FormControl id="Image" >
               <FormLabel>Upload Image </FormLabel>
                     <Input type="file"   name='Image' accept="image/png, image/jpeg"  onChange={(e) => setImage(e.target.files[0])} />
+                    
                   </FormControl>
                  
                   <Flex spacing={'5'} >
                   <Spacer/>
-                  <Button  m={'2%'} onClick={onSumbit} loadingText="Submitting" size="lg" bg={'primary.500'} color={'white'}>Classify</Button>
+                  <Button  m={'2%'} onClick={onSumbit} loadingText="Submitting" size="lg" bg={'primary.100'} color={'white'}>Classify</Button>
+                  <Button  m={'2%'} onClick={onPress} loadingText="Submitting" size="lg" bg={'primary.100'} color={'white'}>Reset</Button>
                   </Flex>
           </Box>
           <Box>
                   { showResults ? <Results /> : null }
                   </Box>
-          <Button  m={'2%'} onClick={onPress} loadingText="Submitting" size="lg" bg={'primary.500'} color={'white'}>Redo</Button>
+                  <Flex>
+                  
+                  </Flex>
+         
       </Stack>
       </Stack>
       </Layout>

@@ -11,7 +11,7 @@ export default function Navlink({ to, name, ...rest }) {
     <Link to={to}>
       <Button
         variant={isActive ? 'outline' : 'ghost'}
-        colorScheme={isActive ? 'primary' : 'gray'}
+        colorScheme={isActive ? 'primary.100' : 'yellow.100'}
         {...rest}
       >
         {name}
