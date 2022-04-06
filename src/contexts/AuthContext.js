@@ -6,6 +6,8 @@ import { createUserWithEmailAndPassword ,
     onAuthStateChanged,
     signOut,
 GoogleAuthProvider,
+sendPasswordResetEmail,
+confirmPasswordReset,
 signInWithPopup} from 'firebase/auth'
 
 const AuthContext = createContext({
@@ -13,7 +15,9 @@ const AuthContext = createContext({
     register: () => Promise,
     login: () => Promise,
     logout: () => Promise,
-    signInWithGoogle: () => Promise
+    signInWithGoogle: () => Promise,
+    forgotPassword: () => Promise,
+    resetPassword: () => Promise,
 })
 
 export const useAuth = () => useContext(AuthContext)
@@ -31,26 +35,9 @@ export default function AuthContextProvider({ children }) {
         }
     },[])
 
-   const register = async (email,password) =>{
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    console.log(res)
-    const user = res.user;
-    console.log(res.user);
-    let idToken = await user.getIdToken(true); //true is for refreshing token
-    console.log(idToken)
+   const register =  (email,password) =>{
     
-
-    // Verify and register user with backend
-    const response = await fetch("http://localhost:8000/api1/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${idToken}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    return res
+    return createUserWithEmailAndPassword(auth, email, password);
 
     }
     
@@ -67,12 +54,24 @@ export default function AuthContextProvider({ children }) {
         const provider =new GoogleAuthProvider()
         return signInWithPopup(auth,provider)
     }
+    function forgotPassword(email) {
+        return sendPasswordResetEmail(auth, email, {
+          url: `http://localhost:3000/login`,
+        })
+      }
+    
+      function resetPassword(oobCode, newPassword) {
+        return confirmPasswordReset(auth, oobCode, newPassword)
+      }
+
     const value = {
         currentUser,
         register,
         login,
         logout,
-        signInWithGoogle
+        signInWithGoogle,
+        forgotPassword,
+        resetPassword,
     }
 
     return <AuthContext.Provider value={value}>

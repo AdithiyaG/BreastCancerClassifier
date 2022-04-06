@@ -21,18 +21,18 @@ import {useAuth} from '../contexts/AuthContext.js'
 
 const Calculator=()=>{
   
-  const [age,setAge]=useState("");
-  const [height,setHeight]=useState("");
+  const [age,setAge]=useState('');
+  const [height,setHeight]=useState('');
   const [weight,setWeight]=useState("");
   const [dose,setDose]=useState(""); 
   const [showResults, setShowResults] = useState(false)
 
   const Calc=()=>{
-    let result =Math.pow(parseInt(height)*0.725)*Math.pow(parseInt(weight)*0.425)*0.007184 *dose;
+    let result =Math.pow(parseInt(height),0.725)*Math.pow(parseInt(weight),0.425)*0.007184 *dose;
     console.log(result)
     return(
-      <Text>
-        ${result}
+      <Text p={'3%'} fontSize={'lg'}>
+        Dubois Dose: {result}
       </Text>
     )
   }
@@ -42,8 +42,6 @@ const Calculator=()=>{
   const onSumbit= ()=>{
     setShowResults(true);
     console.log(showResults)
-    
- 
 }
 
   const onPress=()=>{
@@ -77,12 +75,12 @@ const Calculator=()=>{
                   </FormControl>
                   
                   <FormControl id="height" >
-              <FormLabel>Patient Height</FormLabel>
+              <FormLabel>Patient Height(cms)</FormLabel>
                     <Input type="text" value={height} name="height" onChange={(e) => setHeight(e.target.value)}/>
                   </FormControl>
 
                   <FormControl id="dose" >
-              <FormLabel>BSA dosing</FormLabel>
+              <FormLabel>BSA dosing(mg/m^2)</FormLabel>
                     <Input type="text" value={dose} name="dose" onChange={(e) => setDose(e.target.value)}/>
                   </FormControl>
                  
@@ -93,7 +91,7 @@ const Calculator=()=>{
                   </Flex>
           </Box>
           <Box>
-                  { showResults ? <Calc /> : null }
+                  { showResults ? <Calc />: null }
                   </Box>
                   <Flex>
                   

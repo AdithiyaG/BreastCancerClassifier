@@ -32,17 +32,15 @@ export default function Homepage() {
             fontWeight={600}
             fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
             lineHeight={'110%'}>
-           BreastCancer Classification{' '}
+           Breast Cancer Classification{' '}
             <Text as={'span'} color={'primary.300'}>
               made easy
             </Text>
           </Heading>
           
           <Text color={'gray.500'} maxW={'3xl'}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-optio, eaque rerum! 
+          The app focuses on helping the pathologist classify breast cancer images instantly. 
+          The features of the app help them give a quick and crisp result after the analysis of the cell image
           </Text>
           <Stack spacing={6} direction={'row'}>
             <Button

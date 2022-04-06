@@ -16,36 +16,24 @@ import {
     return(
 <Box>
 <Text fontSize='3xl'>Result</Text>
-  <HStack>
-  
-  <Text>
+  <HStack pl={'3%'}>
+  <Text fontSize={'lg'} fontWeight='bold'>
   Class:
   </Text>
-  <Text>
+  <Text fontSize={'lg'}>
   Benign
   </Text>
   </HStack>
     
-  <HStack>
-  <Text>
+  <HStack  pl={'3%'}>
+  <Text fontSize={'lg'} fontWeight='bold'>
   Accuracy:
   </Text>
-  <Text>
+  <Text fontSize={'lg'}>
   97%
   </Text>
   </HStack>
-  <HStack>
-  <Text>
-  Description:
-  </Text>
-  <Text>
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-  molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-  numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-  optio, eaque rerum! 
-  </Text>
-  </HStack>
-  <Text align={'center'} >Want to know more about Benign?</Text>
+
   
   </Box>
     );

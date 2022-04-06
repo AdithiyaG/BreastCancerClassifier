@@ -9,139 +9,222 @@ import {
   Button,
   Spacer,
   Link,
+  Text,
   HStack,
+  VStack
 } from '@chakra-ui/react';
 import React from 'react'
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from '../components/Layout'
 import Results from "../components/Results"
 import { auth } from '../utils/firebaseconfig'
 import axios from 'axios';
-import {useAuth} from '../contexts/AuthContext.js'
-import {useDropzone} from 'react-dropzone';
+import { useAuth } from '../contexts/AuthContext.js'
+import { useDropzone } from 'react-dropzone';
 import Dropzone from "react-dropzone";
+import Report from './report';
 
-const Model=()=>{
+const Model = () => {
 
- 
-  
-  const [pname,setPname] =useState("");
-  const [pid,setPid] =useState("");
-  const [Image,setImage] =useState(null);
-  const [age,setAge]=useState("");
-  const [height,setHeight]=useState("");
-  const [dose,setDose]=useState(""); 
+
+
+  const [pname, setPname] = useState("");
+  const [pid, setPid] = useState("");
+  const [Image, setImage] = useState(null);
+  const [age, setAge] = useState("");
+  const [height, setHeight] = useState("");
+  const [dose, setDose] = useState("");
+  const [weight, setWeight] = useState("");
   const [showResults, setShowResults] = useState(false)
-  const { currentUser} =useAuth()
+  const [showdata, setShowData] = useState(true)
+  const[path,setImagepath]=useState('')
+  const { currentUser } = useAuth()
 
-  
 
-  const onSumbit= ()=>{
+  const Report2 = () => {
+    return (
+      <Container spacing={10}>
+        <Heading align={'center'} fontSize={'4xl'} md={'5vh'}> Patient Report</Heading>
+        <Box spacing={100} borderWidth='1px' borderRadius='lg' p={'3%'}  >
+          <HStack>
+            <Text fontSize={'xl'} fontWeight='semibold'>Patient ID:</Text>
+            <Spacer />
+            <Text fontSize={'xl'}>{pid}</Text>
+          </HStack>
+          <HStack>
+            <Text fontSize={'xl'} fontWeight='semibold'>Patient Name:</Text>
+            <Spacer />
+            <Text fontSize={'xl'} >{pname}</Text>
+          </HStack>
+          <HStack>
+            <Text fontSize={'xl'} fontWeight='semibold'>Patient Age:</Text>
+            <Spacer />
+            <Text fontSize={'xl'}>{age}</Text>
+          </HStack>
+          <HStack>
+            <Text fontSize={'xl'} fontWeight='semibold'>Patient Height:</Text>
+            <Spacer />
+            <Text fontSize={'xl'}>{height}</Text>
+          </HStack>
+          <HStack>
+            <Text fontSize={'xl'} fontWeight='semibold'>Patient Weight:</Text>
+            <Spacer />
+            <Text fontSize={'xl'}>{weight}</Text>
+          </HStack>
+          <VStack align={'flex-start'}>
+          <Text fontSize={'xl'} fontWeight='semibold'>Result Generated:</Text>
+            <HStack pl={'3%'}>
+              <Text fontSize={'lg'} fontWeight='normal'>
+                Class:
+              </Text>
+              <Text fontSize={'lg'}>
+                Benign
+              </Text>
+            </HStack>
+            <HStack pl={'3%'}>
+              <Text fontSize={'lg'} fontWeight='nomral'>
+                Accuracy:
+              </Text>
+              <Text fontSize={'lg'}>
+                97%
+              </Text>
+            </HStack>
+          </VStack>
+          <HStack>
+            <Text fontSize={'xl'} fontWeight='semibold'>Remarks</Text>
+            <Input type="textarea"  name="remarks" />
+          </HStack>
+          
+
+
+          <Spacer />
+        </Box>
+
+        <Button onClick={OnReport3} loadingText="Submitting" size="lg" bg={'primary.100'} mt={'3vh'} >Back</Button>
+      </Container>
+
+
+
+
+    )
+  }
+
+  const OnReport = () => {
+    setShowData(false)
+  }
+
+  const OnReport3 = () => {
+    setShowData(true)
+  }
+
+  const onSumbit = () => {
     setShowResults(true);
     console.log(showResults)
     let form_data = new FormData();
-    form_data.append('pname',pname)
-    form_data.append('pid',pid)
-    if(Image!=null){
-      form_data.append('Image',Image)
+    form_data.append('pname', pname)
+    form_data.append('pid', pid)
+    if (Image != null) {
+      form_data.append('Image', Image)
     }
-    for(var pair of form_data.entries()) {
-      console.log(pair[0]+ ', '+ pair[1]);
-   }
-
-  
-   currentUser.getIdTokenResult()
-   .then(
-     (res) =>{
-       let token=res.token
-       let url = "http://localhost:8000/model/posts/";
-       axios
-         .post(url, form_data, {
-           headers: {
-             "Content-Type": "application/json",
-             Authorization: `Token ${token}`,
-           },
-         })
-         .then((res) => {
-           console.log(res.data);
-         })
-         .catch((err) => console.log(err));
-
-     }
+    for (var pair of form_data.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
 
 
-   )
+    currentUser.getIdTokenResult()
+      .then(
+        (res) => {
+          let token = res.token
+          let url = "http://localhost:8000/model/posts/";
+          axios
+            .post(url, form_data, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${token}`,
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
+              setImagepath(res.data.Image)
+            })
+            .catch((err) => console.log(err));
 
-}
+        }
 
-  const onPress=()=>{
+
+      )
+
+  }
+
+  const onPress = () => {
     setPname('')
     setPid('')
+    setWeight('')
     setShowResults(false)
   }
 
-   return(
+  return (
     <Layout>
-     <Stack  ml={'5vw'} mr={'30%'} my='2%' >
+      {showdata ? <Stack ml={'5vw'} mr={'30%'} my='2%' >
 
-      <Stack>
-          
-              <Heading fontSize={'4xl'} textAlign={'left'} mb={'2vw'}>
-              Classifier
-            </Heading>
-  
-        
+        <Stack>
+
+          <Heading fontSize={'4xl'} textAlign={'left'} mb={'2vw'}>
+            Classifier
+          </Heading>
 
 
-      <Box spacing={10} borderWidth='1px' borderRadius='lg' p={'3%'}  >  
-              <FormControl id="pname" >
+
+
+          <Box spacing={10} borderWidth='1px' borderRadius='lg' p={'3%'}  >
+            <FormControl id="pname" >
               <FormLabel>Patient Name</FormLabel>
-              <Input type="text" value={pname} name="pname" onChange={(e) => setPname(e.target.value)}/>
-                  </FormControl>
-                  <FormControl id="pid" >
+              <Input type="text" value={pname} name="pname" onChange={(e) => setPname(e.target.value)} />
+            </FormControl>
+            <FormControl id="pid" >
               <FormLabel>Patient ID</FormLabel>
-                    <Input type="text" value={pid} name="pid" onChange={(e) => setPid(e.target.value)}/>
-                  </FormControl>
+              <Input type="text" value={pid} name="pid" onChange={(e) => setPid(e.target.value)} />
+            </FormControl>
 
-                  <FormControl id="age" >
+            <FormControl id="age" >
               <FormLabel>Patient Age</FormLabel>
-                    <Input type="text" value={age} name="age" onChange={(e) => setAge(e.target.value)}/>
-                  </FormControl>
-                  
-                  <FormControl id="height" >
-              <FormLabel>Patient Height</FormLabel>
-                    <Input type="text" value={height} name="height" onChange={(e) => setHeight(e.target.value)}/>
-                  </FormControl>
+              <Input type="text" value={age} name="age" onChange={(e) => setAge(e.target.value)} />
+            </FormControl>
 
-                  <FormControl id="dose" >
-              <FormLabel>BSA dosing</FormLabel>
-                    <Input type="text" value={dose} name="dose" onChange={(e) => setDose(e.target.value)}/>
-                  </FormControl>
+            <FormControl id="height" >
+              <FormLabel>Patient Height(cms)</FormLabel>
+              <Input type="text" value={height} name="height" onChange={(e) => setHeight(e.target.value)} />
+            </FormControl>
+
+            <FormControl id="weight" >
+              <FormLabel>Patient weight(kgs)</FormLabel>
+              <Input type="text" value={weight} name="weight" onChange={(e) => setWeight(e.target.value)} />
+            </FormControl>
 
 
-
-                  <FormControl id="Image" >
+            <FormControl id="Image" >
               <FormLabel>Upload Image </FormLabel>
-                    <Input type="file"   name='Image' accept="image/png, image/jpeg"  onChange={(e) => setImage(e.target.files[0])} />
-                    
-                  </FormControl>
-                 
-                  <Flex spacing={'5'} >
-                  <Spacer/>
-                  <Button  m={'2%'} onClick={onSumbit} loadingText="Submitting" size="lg" bg={'primary.100'} color={'white'}>Classify</Button>
-                  <Button  m={'2%'} onClick={onPress} loadingText="Submitting" size="lg" bg={'primary.100'} color={'white'}>Reset</Button>
-                  </Flex>
+              <Input type="file" name='Image' accept="image/png, image/jpeg" onChange={(e) => setImage(e.target.files[0])} />
+
+            </FormControl>
+
+            <Flex spacing={'5'} >
+              <Spacer />
+              <Button m={'2%'} onClick={onSumbit} loadingText="Submitting" size="lg" bg={'primary.100'} >Classify</Button>
+              <Button m={'2%'} onClick={onPress} loadingText="Submitting" size="lg" bg={'primary.100'} >Reset</Button>
+            </Flex>
           </Box>
           <Box>
-                  { showResults ? <Results /> : null }
-                  </Box>
-                  <Flex>
-                  
-                  </Flex>
-         
-      </Stack>
-      </Stack>
-      </Layout>
+            {showResults ? <Results /> : null}
+          </Box>
+          <Flex>
+            <Spacer />
+            <Button onClick={OnReport} loadingText="Submitting" size="lg" bg={'primary.100'} > Generate Report</Button>
+          </Flex>
+
+        </Stack>
+      </Stack> : <Report2 />}
+    </Layout>
   );
 
 }
