@@ -1,4 +1,4 @@
-import { Heading, Container, Badge } from '@chakra-ui/react'
+import { Heading, Container } from '@chakra-ui/react'
 import {
   Flex,
   Box,
@@ -8,25 +8,32 @@ import {
   Stack,
   Button,
   Spacer,
-  Link,
   Text,
   HStack,
   VStack
 } from '@chakra-ui/react';
 import React from 'react'
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Layout } from '../components/Layout'
 import Results from "../components/Results"
-import { auth } from '../utils/firebaseconfig'
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext.js'
-import { useDropzone } from 'react-dropzone';
-import Dropzone from "react-dropzone";
 import Report from './report';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+
+const schema = yup.object().shape({
+  pname: yup.string().max().required("Patient Name is required ").matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field "),
+  pid: yup.number().positive().integer().required(),
+  age: yup.number().positive().integer().required(),
+  password: yup.string().min(4).max(15).required(),
+  confirmPassword: yup.string().oneOf([yup.ref("password"), null]),
+});
+
 
 const Model = () => {
-
-
 
   const [pname, setPname] = useState("");
   const [pid, setPid] = useState("");
@@ -37,9 +44,13 @@ const Model = () => {
   const [weight, setWeight] = useState("");
   const [showResults, setShowResults] = useState(false)
   const [showdata, setShowData] = useState(true)
-  const[path,setImagepath]=useState('')
   const { currentUser } = useAuth()
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm()
 
   const Report2 = () => {
     return (
@@ -94,17 +105,10 @@ const Model = () => {
             <Text fontSize={'xl'} fontWeight='semibold'>Remarks</Text>
             <Input type="textarea"  name="remarks" />
           </HStack>
-          
-
-
           <Spacer />
         </Box>
-
         <Button onClick={OnReport3} loadingText="Submitting" size="lg" bg={'primary.100'} mt={'3vh'} >Back</Button>
       </Container>
-
-
-
 
     )
   }
@@ -118,65 +122,57 @@ const Model = () => {
   }
 
   const onSumbit = () => {
+    console.log(currentUser.uid)
     setShowResults(true);
-    console.log(showResults)
+    console.log(Image)
     let form_data = new FormData();
+    form_data.append('Image', Image)
     form_data.append('pname', pname)
     form_data.append('pid', pid)
-    if (Image != null) {
-      form_data.append('Image', Image)
-    }
+    
     for (var pair of form_data.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
 
 
-    currentUser.getIdTokenResult()
-      .then(
-        (res) => {
-          let token = res.token
+    // currentUser.getIdTokenResult()
+    //   .then(
+    //     (res) => {
+         // let token = res.token
           let url = "http://localhost:8000/model/posts/";
           axios
             .post(url, form_data, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Token ${token}`,
-              },
             })
             .then((res) => {
               console.log(res.data);
-              setImagepath(res.data.Image)
             })
             .catch((err) => console.log(err));
 
-        }
+      //   }
 
 
-      )
+      // )
 
   }
 
-  const onPress = () => {
+  const onPress = (e) => {
     setPname('')
     setPid('')
     setWeight('')
+    setImage(e.target.files = null)
     setShowResults(false)
+    console.log(pname,pid,Image)
   }
 
   return (
     <Layout>
-      {showdata ? <Stack ml={'5vw'} mr={'30%'} my='2%' >
-
+      {showdata ? 
+      <Stack ml={'5vw'} mr={'30%'} my='2%' >
         <Stack>
-
           <Heading fontSize={'4xl'} textAlign={'left'} mb={'2vw'}>
             Classifier
           </Heading>
-
-
-
-
-          <Box spacing={10} borderWidth='1px' borderRadius='lg' p={'3%'}  >
+          <Box spacing={10}  borderRadius='lg' p={'3%'}  >
             <FormControl id="pname" >
               <FormLabel>Patient Name</FormLabel>
               <Input type="text" value={pname} name="pname" onChange={(e) => setPname(e.target.value)} />

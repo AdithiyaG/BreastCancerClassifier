@@ -55,9 +55,7 @@ export default function AuthContextProvider({ children }) {
         return signInWithPopup(auth,provider)
     }
     function forgotPassword(email) {
-        return sendPasswordResetEmail(auth, email, {
-          url: `http://localhost:3000/login`,
-        })
+        return sendPasswordResetEmail(auth, email)
       }
     
       function resetPassword(oobCode, newPassword) {

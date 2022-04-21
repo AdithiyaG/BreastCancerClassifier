@@ -1,26 +1,27 @@
 import {
-  Badge,
-  chakra,
-  Code,
   Heading,
-  List,
-  ListItem,
-  OrderedList,
-  Tag,
   Text,
   Image,Button,Container,Stack
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Layout } from '../components/Layout'
 import { Link } from 'react-router-dom'
 import {useAuth} from '../contexts/AuthContext.js'
 import medium from '../media/4.png'
-
+import { useDispatch, useSelector } from 'react-redux'
+import Sidebar from '../components/sidebar'
 export default function Homepage() {
+  const dispatch = useDispatch();
+
+
+
   const { currentUser} =useAuth()
+
+
+  console.log(currentUser)
   return (
     <Layout>
-     
+
       <Container maxW={'5xl'}>
         <Stack
           textAlign={'center'}
@@ -42,6 +43,7 @@ export default function Homepage() {
           The app focuses on helping the pathologist classify breast cancer images instantly. 
           The features of the app help them give a quick and crisp result after the analysis of the cell image
           </Text>
+          
           <Stack spacing={6} direction={'row'}>
             <Button
               rounded={'full'}
@@ -63,6 +65,7 @@ export default function Homepage() {
           </Flex> */}
         </Stack>
       </Container>
+     
     </Layout>
   )
 }
