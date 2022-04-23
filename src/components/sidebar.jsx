@@ -91,7 +91,7 @@ import {
           aria-label="Main Navigation"
         >
           <NavItem icon={MdHome} to='/'>Home</NavItem>
-          <NavItem icon={FaRss} to='/details'>Classifier</NavItem>
+          <NavItem icon={FaRss} to='/uploader'>Classifier</NavItem>
           <NavItem icon={HiCollection} to='/features/calculator'>BSA Calculator</NavItem>
           <NavItem icon={FaClipboardCheck} to='/table'>Patient Database</NavItem>
           
@@ -104,12 +104,14 @@ import {
       <Box
         as="section"
         bg={useColorModeValue("gray.50", "gray.700")}
+        
       >
         <SidebarContent display={{ base: "none", md: "unset" }} />
         <Drawer
           isOpen={sidebar.isOpen}
           onClose={sidebar.onClose}
           placement="left"
+
         >
           <DrawerOverlay />
           <DrawerContent>
@@ -130,7 +132,7 @@ import {
           >
             <IconButton
               aria-label="Menu"
-              display={{ base: "inline-flex", md: "none" }}
+              display={{ base: "inline-flex", md: "inline-flex" }}
               onClick={sidebar.onOpen}
               icon={<FiMenu />}
               size="sm"

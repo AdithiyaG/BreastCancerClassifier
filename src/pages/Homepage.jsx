@@ -5,11 +5,9 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { Layout } from '../components/Layout'
-import { Link } from 'react-router-dom'
 import {useAuth} from '../contexts/AuthContext.js'
 import medium from '../media/4.png'
-import { useDispatch, useSelector } from 'react-redux'
-import Sidebar from '../components/sidebar'
+import { useDispatch } from 'react-redux'
 export default function Homepage() {
   const dispatch = useDispatch();
 
@@ -57,12 +55,6 @@ export default function Homepage() {
               Learn more
             </Button>
           </Stack>
-          {/* <Flex w={'full'}>
-            <Illustration
-              height={{ sm: '24rem', lg: '28rem' }}
-              mt={{ base: 12, sm: 16 }}
-            />
-          </Flex> */}
         </Stack>
       </Container>
      

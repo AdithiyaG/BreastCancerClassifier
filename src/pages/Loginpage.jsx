@@ -7,14 +7,13 @@ import {
   HStack,
   Input,
   Stack,
-  useToast,
+  useToast,Container
 } from '@chakra-ui/react'
 import React, { useState} from 'react'
 import { FaGoogle } from 'react-icons/fa'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { Card } from '../components/Card'
 import DividerWithText from '../components/DividerWithText'
-import { Layout } from '../components/Layout'
 import { useAuth } from '../contexts/AuthContext'
 import useMounted from '../hooks/useMounted'
 
@@ -32,18 +31,13 @@ export default function Loginpage() {
 
 
   function handleRedirectToOrBack() {
-    // console.log(location?.state)
     history.replace(location.state?.from ?? '/')
-    // if (location.state) {
-    //   history.replace(location.state?.from)
-    // } else {
-    //   history.replace('/profile')
-    // }
+ 
   }
   
   
    return (
-    <Layout>
+    <Container maxW='container.lg'> 
       <Heading textAlign='center' my={12}>
         Login
       </Heading>
@@ -146,6 +140,6 @@ export default function Loginpage() {
           Log In with Google
         </Button>
       </Card>
-    </Layout>
+    </Container>
   )
 }

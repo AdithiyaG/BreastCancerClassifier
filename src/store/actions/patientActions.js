@@ -1,5 +1,6 @@
 import { ActionTypes } from "../constants/action_types";
 
+
 export const setPatient = (data) => {
   return {
     type: ActionTypes.UPDATE_PATIENTTABLE,
@@ -8,8 +9,19 @@ export const setPatient = (data) => {
 };
 
 
-export const GenerateReport= () => {
+export const setCount = (data) => {
+  return {
+    type: ActionTypes.UPDATE_COUNT,
+    payload: data,
+  };
+};
+
+
+
+
+export const GenerateReport = () => {
   return {
     type: ActionTypes.UPDATE_FORMADATA,
   };
 };
+

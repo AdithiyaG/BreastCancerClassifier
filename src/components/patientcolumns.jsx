@@ -11,22 +11,7 @@ export const COLUMNS = [
     Header: 'Patient Name',
     accessor: 'PatientName',
   },
-  {
-    Header: 'Patient Age',
-    accessor: 'PatientAge',
-  },
-  {
-    Header: 'Date of Birth',
-    accessor: 'PatientDOB',
-  },
-  {
-    Header: 'Patient Height',
-    accessor: 'PatientHeight'
-  },
-  {
-    Header: 'Patient Weight',
-    accessor: 'PatientWeight'
-  },
+
   {
     Header: 'DateCreated',
     accessor: 'DateCreated'
