@@ -3,13 +3,15 @@ import { FormProvider, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ClassifierForm from "./ClassifierForm";
-import { Button } from "@chakra-ui/react";
+import { Button, Flex, Spacer } from "@chakra-ui/react";
 import { useHistory } from 'react-router-dom'
 import { Layout } from "../../components/Layout";
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../contexts/AuthContext.js'
 import axios from 'axios';
-import { setPatient,setCount } from "../../store/actions/patientActions";
+import { setPatient,setCount,GenerateReport,setResult } from "../../store/actions/patientActions";
+import useLoader from "../../hooks/useLoader";
+import Loader from "../../components/Loader";
 
 const schema = yup.object().shape({
     MedicalId: yup.number().positive().integer().required('ID is required').typeError("ID is Required and must be Positive"),
@@ -23,6 +25,8 @@ const schema = yup.object().shape({
 
 
 const FormUp = () => {
+    const [loader,showLoader,Hideloader] =useLoader()
+    const history = useHistory();
     const dispatch = useDispatch();
     const { currentUser } = useAuth()
     const fetchProducts = async () => {
@@ -31,22 +35,25 @@ const FormUp = () => {
         .catch((err) => {
           console.log("Err: ", err);
         });
-
         const response2 = await axios
         .get(`http://localhost:8000/service1/patientdetails/?count=1`)
         .catch((err) => {
           console.log("Err: ", err);
         });
+        const response3=await axios
+        .get(`http://localhost:8000/service1/classifier/`)
+        .catch((err) => {
+          console.log("Err: ", err);
+        });
 
-        console.log('count',response2.data)
 
     dispatch(setCount(response2.data))
       dispatch(setPatient(response.data));
+      dispatch(setResult(response3.data))
     };
   
     useEffect(() => {
       fetchProducts();
-      console.log('I done')
     }, []);
 
    
@@ -61,10 +68,12 @@ const FormUp = () => {
         PatientGender: '',
         PatientDOB:''
           },
-        mode: "onChange",
+        mode: "onBlur",
         resolver: yupResolver(schema)
     })
     const onSubmit = methods.handleSubmit(async (data) => {
+      console.log(data)
+        showLoader()
         const putpatienturl = `http://localhost:8000/service1/patientdetails/`
         const postclassifierurl = `http://localhost:8000/service1/classifier/`
         const postpatienturl = `http://localhost:8000/service1/patientdetails/`
@@ -84,16 +93,6 @@ const FormUp = () => {
         patientData.append('PatientWeight', data.PatientWeight)
         patientData.append('UserId', currentUser.uid)
 
-
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-
-        for (var pair of patientData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-
-
         if (data.New_Patient === 'New') {
 
             const ppresponse = await axios.post(postpatienturl,patientData).catch(err => console.log(err))
@@ -101,6 +100,8 @@ const FormUp = () => {
                 console.log("New Patient Added")
                 const cresponse = await axios.post(postclassifierurl, formData).catch(err => console.log(err))
                 console.log(cresponse.data)
+                dispatch(GenerateReport([data,cresponse.data]))
+                Hideloader()
             }
         }
 
@@ -111,26 +112,34 @@ const FormUp = () => {
                     console.log("Patient updated")
                     const cresponse = await axios.post(postclassifierurl, formData).catch(err => console.log(err))
                     console.log(cresponse.data)
+                    dispatch(GenerateReport([data,cresponse.data]))
+                    Hideloader()
                 }
             }
         }
+
+        history.push('/report')
+      
+
     })
 
     return (
         <Layout>
         <FormProvider {...methods}>
-            
-                
+            <Flex direction={'column'} mb={'5vh'}>
                     <ClassifierForm
                         accept="image/png, image/jpg, image/jpeg"
                         name="files"
                         label="Upload Specimen Image"
                     />
-                    <Button  type='submit' onClick={onSubmit}>
-                                Confirm 
-                            </Button>
+                    
+                    <Button bgColor={'teal.200'} mx={'auto'} type='submit' onClick={onSubmit}> {loader} Analyze and Generate Report </Button>
+                            </Flex>
+                           
                 
         </FormProvider>
+        
+        
         </Layout>
     )
 }

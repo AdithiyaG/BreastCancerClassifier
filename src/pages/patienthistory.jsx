@@ -1,6 +1,6 @@
 import { Layout } from '../components/Layout'
 import React, { useEffect, useMemo } from "react";
-import { useTable, useSortBy } from "react-table";
+import { useTable, useSortBy,usePagination } from "react-table";
 import { COLUMNS } from "../components/patientcolumns";
 import {
   Table,
@@ -10,12 +10,17 @@ import {
   Th,
   Td,
   Flex,
+  Button,
+  Text,
+  SimpleGrid,
+  GridItem,
 } from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../contexts/AuthContext.js'
 import axios from 'axios';
 import { setPatient } from "../store/actions/patientActions";
+import {IoIosArrowForward,IoIosArrowBack} from 'react-icons/io'
 
 function Patient() {
 
@@ -46,29 +51,36 @@ function Patient() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage, 
+    pageOptions,
+    setPageSize,
+    state,   
     prepareRow
   } = useTable(
     {
       columns: columns,
-      data: row
+      data: row,
+      initialState: { pageSize: 5 }
     },
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
+  const {pageIndex,pageSize} = state
 
-  // We don't want to render all 2000 rows for this example, so cap
-  // it at 20 for this use case
-  const firstPageRows = rows.slice(0, 20);
-
+  
   return (
     <Layout>
-      <Table {...getTableProps()}>
+      <Table {...getTableProps()} mx={'8vw'} mt={'5vh'} >
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <Th
+                <Th color={'teal'}
                   userSelect="none"
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
@@ -91,7 +103,7 @@ function Patient() {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {firstPageRows.map((row, i) => {
+          {page.map((row, i) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()} >
@@ -100,19 +112,16 @@ function Patient() {
                     <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
                   );
                 })}
-                {/* <Td>
-                <IconButton
-              
-              display={{ base: "inline-flex" }}
-              icon={<HiExternalLink />}
-              size="sm"
-            ><Link to></Link></IconButton>I
-                </Td> */}
               </Tr>
             );
           })}
         </Tbody>
       </Table>
+      <SimpleGrid columns={4} my={'4vh'} ml={'10vw'} >
+        <Button bgColor={'teal.200'}onClick={()=>previousPage()} isDisabled={!canPreviousPage} as={GridItem} colspan={1} mx={'auto'} colStart={1} ><IoIosArrowBack/></Button>
+        <Text as={GridItem} colspan={'1'} colStart={3}>{pageIndex+1} of {pageOptions.length}</Text>
+        <Button bgColor={'teal.200'} onClick={()=>nextPage() }isDisabled={!canNextPage} as={GridItem} colspan={1} colStart={4} mx={'auto'} ><IoIosArrowForward/></Button>
+      </SimpleGrid>
     </Layout>
   );
 }

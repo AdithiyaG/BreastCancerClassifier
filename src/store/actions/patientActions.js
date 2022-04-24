@@ -17,11 +17,20 @@ export const setCount = (data) => {
 };
 
 
-
-
-export const GenerateReport = () => {
+export const setResult = (data) => {
   return {
-    type: ActionTypes.UPDATE_FORMADATA,
+    type: ActionTypes.UPDATE_RESULTDATA,
+    payload: data,
+  };
+};
+
+
+
+
+export const GenerateReport = (data) => {
+  return {
+    type: ActionTypes.UPDATE_FORMDATA,
+    payload:data
   };
 };
 

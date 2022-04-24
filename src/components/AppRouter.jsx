@@ -17,6 +17,7 @@ import Patient from '../pages/patienthistory'
 import Pdetails2 from '../pages/patientprofile'
 import FormUp from '../pages/Classifier/Form'
 import Report from '../pages/report'
+import Loader from './Loader'
 import { AnimatePresence } from 'framer-motion'
 
 
@@ -24,8 +25,7 @@ export default function AppRouter(props) {
   const location =useLocation();
   return (
     <>
-        <AnimatePresence exitBeforeEnter>
-        <Switch key={location.pathname} location={location}>
+        <Switch>
           <Route exact path='/' component={Homepage} />
           <ProtectedRoute exact path='/table' component={Patient} />
           <Route exact path='/table/:id' component={Pdetails2} />
@@ -38,11 +38,10 @@ export default function AppRouter(props) {
           <ProtectedRoute  exact path='/forgot-password' component={ForgotPasswordPage} />
           <ProtectedRoute  exact path='/reset-password' component={ResetPasswordPage} />
           <Route exact path='/report' component={Report} />
-          <Route exact path='/about' component={Com} />
+          <Route exact path='/about' component={Loader} />
           <Route exact path='/contact' component={Contact} />
           <Route exact path='*' component={NotfoundPage} />
         </Switch>
-        </AnimatePresence>
     </>
   )
 }

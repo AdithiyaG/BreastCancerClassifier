@@ -20,7 +20,7 @@ export const COLUMNS = [
     Header:'Actions',
     Cell:(props)=>{
       return(
-        <Link href={`/table/${props.row.original.MedicalId}`}><IconButton  icon={<HiExternalLink />} ></IconButton></Link>
+        <Link href={`/table/${props.row.original.MedicalId}`}><IconButton bgColor={'teal.200'} icon={<HiExternalLink />} ></IconButton></Link>
         )
     }
       
