@@ -39,10 +39,6 @@ export const COLUMNS2 = [
     accessor: 'Class',
   },
   {
-    Header: 'Accuracy',
-    accessor: 'Accuracy',
-  },
-  {
     Header: 'ImagePath',
     accessor: 'ImagePath',
   },

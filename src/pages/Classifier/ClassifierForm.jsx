@@ -71,7 +71,7 @@ const ClassifierForm = (props) => {
     function addToast() {
         toastIdRef.current = toast({
             title: 'Autofilled Values',
-            description: "We've filled some values for you",
+            description: "We've filled values for you",
             status: 'success',
             duration: 7000,
             isClosable: true,
@@ -181,7 +181,7 @@ const ClassifierForm = (props) => {
                             <FormLabel htmlFor='MedicalId'>Id</FormLabel>
                             <Input
                                 type='number'
-                                {...register('MedicalId')} isReadOnly={!state}
+                                {...register('MedicalId')} isReadOnly={!state} onWheel={(e) => e.target.blur()}
                             />
                             <FormErrorMessage>
                                 {errors.MedicalId && errors.MedicalId.message}

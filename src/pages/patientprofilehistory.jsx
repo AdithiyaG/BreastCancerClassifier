@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
-import { useTable, useSortBy } from "react-table";
+import { useTable, useSortBy,usePagination } from "react-table";
+import {IoIosArrowForward,IoIosArrowBack} from 'react-icons/io'
 import { COLUMNS2 } from "../components/patientcolumns";
 import {
   Table,
@@ -8,7 +9,7 @@ import {
   Tr,
   Th,
   Td,
-  Flex,
+  Flex,SimpleGrid,GridItem,Button,Text
 } from "@chakra-ui/react";
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
@@ -25,18 +26,26 @@ function PatientResults({id,details}) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage, 
+    pageOptions,
+    state,
     prepareRow
   } = useTable(
     {
       columns: columns,
-      data: row
+      data: row,
+      initialState: { pageSize: 5 }
     },
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
+  const {pageIndex,pageSize} = state
 
-  const firstPageRows = rows.slice(0, 20);
 
   return (
     <>
@@ -68,7 +77,7 @@ function PatientResults({id,details}) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {firstPageRows.map((row, i) => {
+          {page.map((row, i) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()} >
@@ -82,6 +91,11 @@ function PatientResults({id,details}) {
           })}
         </Tbody>
       </Table>
+      <SimpleGrid columns={4} my={'4vh'} ml={'10vw'} >
+        <Button bgColor={'teal.200'}onClick={()=>previousPage()} isDisabled={!canPreviousPage} as={GridItem} colspan={1} mx={'auto'} colStart={1} ><IoIosArrowBack/></Button>
+        <Text as={GridItem} colspan={'1'} colStart={3}>{pageIndex+1} of {pageOptions.length}</Text>
+        <Button bgColor={'teal.200'} onClick={()=>nextPage() }isDisabled={!canNextPage} as={GridItem} colspan={1} colStart={4} mx={'auto'} ><IoIosArrowForward/></Button>
+      </SimpleGrid>
     </>
   );
 }

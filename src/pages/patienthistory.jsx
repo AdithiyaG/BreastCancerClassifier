@@ -57,8 +57,7 @@ function Patient() {
     canNextPage,
     canPreviousPage, 
     pageOptions,
-    setPageSize,
-    state,   
+    state, 
     prepareRow
   } = useTable(
     {

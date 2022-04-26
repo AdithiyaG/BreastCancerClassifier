@@ -7,7 +7,7 @@ import {
   Heading,
   Input,
   Stack,
-  useToast,
+  useToast,Container
 } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { FaGoogle } from 'react-icons/fa'
@@ -29,7 +29,7 @@ export default function Registerpage() {
   const mounted = useMounted()
 
   return (
-    <Layout>
+    <Container maxW='container.lg'>
       <Heading textAlign='center' my={12}>
         SignUp
       </Heading>
@@ -91,7 +91,7 @@ export default function Registerpage() {
             </FormControl>
             <Button
               type='submit'
-              bg={'primary.100'}
+              bg={'teal.200'}
               size='lg'
               fontSize='md'
               isLoading={isSubmitting}
@@ -120,6 +120,6 @@ export default function Registerpage() {
           Sign Up with Google
         </Button>
       </Card>
-    </Layout>
+    </Container>
   )
 }

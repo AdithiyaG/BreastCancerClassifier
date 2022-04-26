@@ -28,7 +28,7 @@ const Calculator=()=>{
   const [showResults, setShowResults] = useState(false)
 
   const Calc=()=>{
-    let result =Math.pow(parseInt(height),0.725)*Math.pow(parseInt(weight),0.425)*0.007184 *dose;
+    let result =(Math.pow(parseInt(height),0.725)*Math.pow(parseInt(weight),0.425)*0.007184 *dose).toFixed(2);
     console.log(result)
     return(
       <Text p={'3%'} fontSize={'lg'}>
@@ -66,16 +66,16 @@ const Calculator=()=>{
   
       <Box spacing={10} borderWidth='1px' borderRadius='lg' p={'3%'}  >  
                   <FormControl id="age" >
-              <FormLabel>Patient Age</FormLabel>
+              <FormLabel>Age</FormLabel>
                     <Input type="text" value={age} name="age" onChange={(e) => setAge(e.target.value)}/>
                   </FormControl>
                   <FormControl id="weight" >
-                  <FormLabel>Patient weight(kgs)</FormLabel>
+                  <FormLabel>weight(kgs)</FormLabel>
                     <Input type="text" value={weight} name="weight" onChange={(e) => setWeight(e.target.value)}/>
                   </FormControl>
                   
                   <FormControl id="height" >
-              <FormLabel>Patient Height(cms)</FormLabel>
+              <FormLabel>Height(cms)</FormLabel>
                     <Input type="text" value={height} name="height" onChange={(e) => setHeight(e.target.value)}/>
                   </FormControl>
 
@@ -86,8 +86,8 @@ const Calculator=()=>{
                  
                   <Flex spacing={'5'} >
                   <Spacer/>
-                  <Button  m={'2%'} onClick={onSumbit} loadingText="Submitting" size="lg" bg={'primary.100'} color={'white'}>Calculate</Button>
-                  <Button  m={'2%'} onClick={onPress} loadingText="Submitting" size="lg" bg={'primary.100'} color={'white'}>Reset</Button>
+                  <Button  m={'2%'} onClick={onSumbit} loadingText="Submitting" size="lg" bg={'teal.200'} color={'black'}>Calculate</Button>
+                  <Button  m={'2%'} onClick={onPress} loadingText="Submitting" size="lg" bg={'teal.200'} color={'black'}>Reset</Button>
                   </Flex>
           </Box>
           <Box>

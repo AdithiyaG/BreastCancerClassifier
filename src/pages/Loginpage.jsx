@@ -105,7 +105,7 @@ export default function Loginpage() {
             {/* <PasswordField /> */}
             <Button
               type='submit'
-              bg='primary.100'
+              bg='teal.200'
               size='lg'
               fontSize='md'
               isLoading={isSubmitting}

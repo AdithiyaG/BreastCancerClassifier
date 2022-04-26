@@ -1,11 +1,11 @@
-import { Heading, InputGroup, InputLeftAddon, IconButton, Button } from '@chakra-ui/react'
+import { Heading, InputGroup, InputLeftAddon, IconButton, Button, HStack, Text, Container } from '@chakra-ui/react'
 import {
     
     Box,
     FormControl,
     FormErrorMessage,
     Input,
-    Stack,
+    Stack,SimpleGrid,GridItem
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { Layout } from '../components/Layout'
@@ -52,7 +52,53 @@ const Pdetails2 = () => {
 
     return (
         <Layout>
-           
+          <Box my={'2vh'}>
+          <Heading size={'lg'} color={'teal'}>Patient Profile for ID {MedicalId}</Heading>
+          <SimpleGrid columns={2} my={'5vh'} spacing={20} ml={'2vw'}>
+            <GridItem colSpan={1}>
+              <SimpleGrid columns={6} my={'2vh'} >
+                <Text>Name:</Text>
+                <GridItem  colStart={2} colSpan={3}>
+                <Input value={PatientName} isReadOnly variant={'filled'} bgColor={'teal.100'} size={'md'}/>
+                </GridItem>
+              </SimpleGrid>
+              <SimpleGrid columns={6} my={'2vh'}>
+                <Text>Age:</Text>
+                <GridItem  colStart={2} colSpan={3}>
+                <Input value={PatientAge} isReadOnly variant={'filled'} bgColor={'teal.100'} size={'md'}/>
+                </GridItem>
+              </SimpleGrid>
+              <SimpleGrid columns={6} my={'2vh'}>
+                <Text>Gender:</Text>
+                <GridItem  colStart={2} colSpan={3}>
+                <Input value={PatientGender} isReadOnly variant={'filled'} bgColor={'teal.100'} size={'md'}/>
+                </GridItem>
+              </SimpleGrid>
+            </GridItem>
+
+            <GridItem colSpan={1}>
+              <SimpleGrid columns={6} my={'2vh'} >
+                <Text>Birth Date:</Text>
+                <GridItem  colStart={3} colSpan={3}>
+                <Input value={PatientDOB} isReadOnly variant={'filled'} bgColor={'teal.100'} size={'md'}/>
+                </GridItem>
+              </SimpleGrid>
+              <SimpleGrid columns={6} my={'2vh'}>
+                <Text>Height:</Text>
+                <GridItem  colStart={3} colSpan={3}>
+                <Input value={PatientHeight} isReadOnly variant={'filled'} bgColor={'teal.100'} size={'md'}/>
+                </GridItem>
+              </SimpleGrid>
+              <SimpleGrid columns={6} my={'2vh'}>
+                <Text>Weight:</Text>
+                <GridItem  colStart={3} colSpan={3}>
+                <Input value={PatientWeight} isReadOnly variant={'filled'} bgColor={'teal.100'} size={'md'}/>
+                </GridItem>
+              </SimpleGrid>
+            </GridItem>
+          </SimpleGrid>
+          </Box>
+           <PatientResults id={id} details={history}/>
         </Layout>
 
     )

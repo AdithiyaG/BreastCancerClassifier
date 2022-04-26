@@ -1,13 +1,15 @@
 import {
   Heading,
   Text,
-  Image,Button,Container,Stack
+  Image,Button,Container,Stack,Flex, Icon
 } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { Layout } from '../components/Layout'
 import {useAuth} from '../contexts/AuthContext.js'
 import medium from '../media/4.png'
 import { useDispatch } from 'react-redux'
+import woman from '../media/backside-view-of-young-girl-with-1561504-0.svg'
+import Woman  from '../components/Woman'
 export default function Homepage() {
   const dispatch = useDispatch();
 
@@ -19,13 +21,16 @@ export default function Homepage() {
   console.log(currentUser)
   return (
     <Layout>
+     
 
-      <Container maxW={'5xl'}>
+      <Container maxW={'6xl'} mx={150}>
+      <Flex alignItems={'center'}>
         <Stack
-          textAlign={'center'}
-          align={'center'}
+          textAlign={'left'}
+          align={'start'}
           spacing={{ base: 8, md: 10 }}
-          py={{ base: 20, md: 28 }}>
+          
+          >
              <Image src={medium} />
           <Heading
             fontWeight={600}
@@ -47,7 +52,7 @@ export default function Homepage() {
               rounded={'full'}
               px={6}
               colorScheme={'pink'}
-              bg={'primary.100'}
+              bg={'teal.200'}
               _hover={{ bg: 'yellow.300' }}>
               Get started
             </Button>
@@ -56,7 +61,10 @@ export default function Homepage() {
             </Button>
           </Stack>
         </Stack>
+        <Woman/>
+      </Flex>
       </Container>
+     
      
     </Layout>
   )
