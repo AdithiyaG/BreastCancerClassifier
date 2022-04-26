@@ -1,24 +1,17 @@
-import { Heading, InputGroup, InputLeftAddon, IconButton, Button, HStack, Text, Container } from '@chakra-ui/react'
+import { Heading, Text } from '@chakra-ui/react'
 import {
     
     Box,
-    FormControl,
-    FormErrorMessage,
     Input,
-    Stack,SimpleGrid,GridItem
+    SimpleGrid,GridItem
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { Layout } from '../components/Layout'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {BiEdit} from 'react-icons/bi'
-import {AiOutlineClose} from 'react-icons/ai'
 import PatientResults from './patientprofilehistory';
-import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
+import { path } from '../components/apilink';
 
 
 
@@ -29,7 +22,7 @@ const Pdetails2 = () => {
 
   const fetchProducts = async () => {
     const response = await axios
-      .get(`http://localhost:8000/service1/classifier/?id=${id}`)
+      .get(path+`service1/classifier/?id=${id}`)
       .catch((err) => {
         console.log("Err: ", err);
       });

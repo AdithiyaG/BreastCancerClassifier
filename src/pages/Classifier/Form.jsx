@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ClassifierForm from "./ClassifierForm";
-import { Button, Flex, Spacer } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { useHistory } from 'react-router-dom'
 import { Layout } from "../../components/Layout";
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,7 @@ import { useAuth } from '../../contexts/AuthContext.js'
 import axios from 'axios';
 import { setPatient,setCount,GenerateReport,setResult } from "../../store/actions/patientActions";
 import useLoader from "../../hooks/useLoader";
-import Loader from "../../components/Loader";
+import { path } from "../../components/apilink";
 
 const schema = yup.object().shape({
     MedicalId: yup.number().positive().integer().required('ID is required').typeError("ID is Required and must be Positive"),
@@ -31,17 +31,17 @@ const FormUp = () => {
     const { currentUser } = useAuth()
     const fetchProducts = async () => {
       const response = await axios
-        .get(`http://localhost:8000/service1/patientdetails/?user=${currentUser.uid}`)
+        .get( path+`service1/patientdetails/?user=${currentUser.uid}`)
         .catch((err) => {
           console.log("Err: ", err);
         });
         const response2 = await axios
-        .get(`http://localhost:8000/service1/patientdetails/?count=1`)
+        .get(path+`service1/patientdetails/?count=1`)
         .catch((err) => {
           console.log("Err: ", err);
         });
         const response3=await axios
-        .get(`http://localhost:8000/service1/classifier/`)
+        .get(path+`service1/classifier/`)
         .catch((err) => {
           console.log("Err: ", err);
         });
@@ -73,10 +73,14 @@ const FormUp = () => {
     })
     const onSubmit = methods.handleSubmit(async (data) => {
       console.log(data)
+      const url=URL.createObjectURL(data.files[0])
+      console.log(url,data.files)
+      data.files.push(url)
+      console.log(data.files)
         showLoader()
-        const putpatienturl = `http://localhost:8000/service1/patientdetails/`
-        const postclassifierurl = `http://localhost:8000/service1/classifier/`
-        const postpatienturl = `http://localhost:8000/service1/patientdetails/`
+        const putpatienturl = path+`service1/patientdetails/`
+        const postclassifierurl = path+`service1/classifier/`
+        const postpatienturl = path+`service1/patientdetails/`
         const patientData = new FormData()
         const formData = new FormData()
         formData.append("MedicalId", data.MedicalId)
@@ -101,7 +105,6 @@ const FormUp = () => {
                 const cresponse = await axios.post(postclassifierurl, formData).catch(err => console.log(err))
                 console.log(cresponse.data)
                 dispatch(GenerateReport([data,cresponse.data]))
-                Hideloader()
             }
         }
 
@@ -113,10 +116,11 @@ const FormUp = () => {
                     const cresponse = await axios.post(postclassifierurl, formData).catch(err => console.log(err))
                     console.log(cresponse.data)
                     dispatch(GenerateReport([data,cresponse.data]))
-                    Hideloader()
+                    
                 }
             }
         }
+        Hideloader()
 
         history.push('/report')
       

@@ -1,17 +1,14 @@
 import {
   Heading,
   Text,
-  Image,Button,Container,Stack,Flex, Icon
+  Image,Button,Container,Stack,Flex,
 } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Layout } from '../components/Layout'
 import {useAuth} from '../contexts/AuthContext.js'
 import medium from '../media/4.png'
-import { useDispatch } from 'react-redux'
-import woman from '../media/backside-view-of-young-girl-with-1561504-0.svg'
 import Woman  from '../components/Woman'
 export default function Homepage() {
-  const dispatch = useDispatch();
 
 
 

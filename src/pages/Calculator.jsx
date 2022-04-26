@@ -1,4 +1,4 @@
-import { Heading, Container, Badge } from '@chakra-ui/react'
+import { Heading} from '@chakra-ui/react'
 import {
   Flex,
   Box,
@@ -8,20 +8,17 @@ import {
   Stack,
   Button,
   Spacer,
-  Link,
-  HStack,
   Text
 } from '@chakra-ui/react';
 import React from 'react'
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { Layout } from '../components/Layout'
-import Results from "../components/Results"
-import {useAuth} from '../contexts/AuthContext.js'
+
 
 
 const Calculator=()=>{
   
-  const [age,setAge]=useState('');
+  
   const [height,setHeight]=useState('');
   const [weight,setWeight]=useState("");
   const [dose,setDose]=useState(""); 
@@ -45,7 +42,6 @@ const Calculator=()=>{
 }
 
   const onPress=()=>{
-    setAge('')
     setHeight('')
     setWeight('')
     setDose('')
@@ -65,10 +61,6 @@ const Calculator=()=>{
             
   
       <Box spacing={10} borderWidth='1px' borderRadius='lg' p={'3%'}  >  
-                  <FormControl id="age" >
-              <FormLabel>Age</FormLabel>
-                    <Input type="text" value={age} name="age" onChange={(e) => setAge(e.target.value)}/>
-                  </FormControl>
                   <FormControl id="weight" >
                   <FormLabel>weight(kgs)</FormLabel>
                     <Input type="text" value={weight} name="weight" onChange={(e) => setWeight(e.target.value)}/>

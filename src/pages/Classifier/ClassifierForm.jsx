@@ -2,15 +2,13 @@ import {
     Flex, Box, FormControl, FormLabel, FormErrorMessage, Input, Stack, Radio, RadioGroup, Heading, useToast, Text, Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
     TableContainer,
 } from '@chakra-ui/react';
 import { useDropzone } from "react-dropzone"
-import { useFormContext, Controller } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
@@ -22,6 +20,7 @@ const ClassifierForm = (props) => {
     const toast = useToast()
     const [result,setResult]=useState('')
     const [rdate,setDate]=useState('')
+    const [error,setError]=useState(false)
 
     const files = watch(name)
 
@@ -42,6 +41,7 @@ const ClassifierForm = (props) => {
             unregister(name)
         }
     }, [register, unregister, name])
+
 
     const toastIdRef = React.useRef()
 
@@ -82,7 +82,6 @@ const ClassifierForm = (props) => {
     const id = watch('MedicalId')
     const type = watch('New_Patient')
     const pname = watch('PatientName')
-    let b=[]
     useEffect(() => {
         if (type == 'New') {
             setState(false)
@@ -109,6 +108,8 @@ const ClassifierForm = (props) => {
             if (a.length === 0) {
 
                 console.log('Error')
+                setError(true)
+                console.log(error,1)
                 setValue('PatientName', '')
                 setValue('PatientAge', '')
                 setValue('PatientHeight', '')
@@ -122,6 +123,8 @@ const ClassifierForm = (props) => {
             }
             else {
                 console.log(1, a)
+                setError(false)
+                console.log(error,1)
                 let c = details.result.filter(item => item.MedicalId == id)
                 c = c[c.length - 1]
                 setResult(c.Class)
@@ -187,7 +190,8 @@ const ClassifierForm = (props) => {
                                 {errors.MedicalId && errors.MedicalId.message}
 
                             </FormErrorMessage>
-                            {(pname == '' && type == 'Old') && <Text color={'red'}> Please Enter Valid Medical ID</Text>}
+                            {(pname == '' && type == 'Old' && error && id!=='') && <Text color={'red'}> Please Enter Valid Medical ID</Text>}
+                            {(pname !== '' && type === 'Old' && !error && id!=='') && <Text color={'green'}>  Valid Medical ID</Text>}
 
                         </FormControl>
 
@@ -203,6 +207,17 @@ const ClassifierForm = (props) => {
                             </FormErrorMessage>
                         </FormControl>
 
+                 
+
+                        <FormControl >
+                            <FormLabel htmlFor='PatientDOB'>Date of Birth</FormLabel>
+                            <Input
+
+                                type='date'
+                                {...register('PatientDOB')} isReadOnly={state}
+                            />
+                        </FormControl>
+
                         <FormControl isInvalid={errors.PatientAge}>
                             <FormLabel htmlFor='PatientAge'>Age</FormLabel>
                             <Input
@@ -215,15 +230,6 @@ const ClassifierForm = (props) => {
                             </FormErrorMessage>
                         </FormControl>
 
-
-                        <FormControl >
-                            <FormLabel htmlFor='PatientDOB'>Date of Birth</FormLabel>
-                            <Input
-
-                                type='date'
-                                {...register('PatientDOB')} isReadOnly={state}
-                            />
-                        </FormControl>
 
                         <FormControl>
                             <FormLabel htmlFor='PatientGender'>Gender</FormLabel>
@@ -281,20 +287,18 @@ const ClassifierForm = (props) => {
 
                                     {!!files?.length && (
                                         <div className=" ">
-                                            {files.map(file => {
-                                                return (
-                                                    <div key={file.name}>
+                                            
+                                                    <div key={files[0].name}>
                                                         <img
-                                                            src={URL.createObjectURL(file)}
-                                                            alt={file.name}
+                                                            src={URL.createObjectURL(files[0])}
+                                                            alt={files[0].name}
                                                             style={{
                                                                 height: "200px",
                                                             }}
                                                         />
-                                                        {file.name}
+                                                        {files[0].name}
                                                     </div>
-                                                )
-                                            })}
+                                           
                                         </div>
                                     )}
                                 </div>

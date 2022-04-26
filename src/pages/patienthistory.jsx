@@ -21,6 +21,7 @@ import { useAuth } from '../contexts/AuthContext.js'
 import axios from 'axios';
 import { setPatient } from "../store/actions/patientActions";
 import {IoIosArrowForward,IoIosArrowBack} from 'react-icons/io'
+import {path} from '../components/apilink'
 
 function Patient() {
 
@@ -32,7 +33,7 @@ function Patient() {
   const fetchProducts = async () => {
     console.log(currentUser)
     const response = await axios
-      .get(`http://localhost:8000/service1/patientdetails/?user=${currentUser.uid}`)
+      .get(path+`service1/patientdetails/?user=${currentUser.uid}`)
       .catch((err) => {
         console.log("Err: ", err);
       });
@@ -69,7 +70,7 @@ function Patient() {
     usePagination
   );
 
-  const {pageIndex,pageSize} = state
+  const {pageIndex} = state
 
   
   return (

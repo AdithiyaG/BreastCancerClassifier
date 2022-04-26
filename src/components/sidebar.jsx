@@ -33,7 +33,6 @@ export default function Sidebar() {
     const location = useLocation()
 
     const isActive = location.pathname === to
-    console.log('active',isActive)
     return (
       <Flex
         align="center"

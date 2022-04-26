@@ -9,17 +9,15 @@ import {
   Stack,
   useToast,Container
 } from '@chakra-ui/react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { FaGoogle } from 'react-icons/fa'
 import { useHistory } from 'react-router-dom'
 import { Card } from '../components/Card'
 import DividerWithText from '../components/DividerWithText'
-import { Layout } from '../components/Layout'
 import { useAuth } from '../contexts/AuthContext'
 import useMounted from '../hooks/useMounted'
 
 export default function Registerpage() {
-  const { currentUser } = useAuth()
   const history = useHistory()
   const { signInWithGoogle, register } = useAuth()
   const [email, setEmail] = useState('')

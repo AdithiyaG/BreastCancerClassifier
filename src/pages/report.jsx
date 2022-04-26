@@ -1,17 +1,13 @@
-import { Heading, Container, FormControl, FormLabel, FormHelperText, Textarea } from '@chakra-ui/react'
+import { Heading,FormControl, FormLabel, Textarea } from '@chakra-ui/react'
 import {
   Box,
   Input,
-  Spacer,
-  Text,
-  HStack,
-  VStack, Image, Divider, Button,
-  Flex, Center, Grid, GridItem, SimpleGrid
+  Text, Image, Divider, Button,
+  Flex, Center, GridItem, SimpleGrid
 } from '@chakra-ui/react';
 import { Layout } from '../components/Layout'
 import medium from '../media/4.png'
 import { useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
 import React, { useRef } from 'react'
 import { useReactToPrint } from "react-to-print";
 
@@ -47,8 +43,6 @@ const Report = (props) => {
 
   const data = useSelector((state) => state.allFormdata.data)
   console.log(data)
-  const location = useLocation()
-  console.log(location)
   console.log(data[1].Class,'maligant',data[1].Class=='maligant')
   return (
     <Layout>
@@ -148,21 +142,10 @@ const Report = (props) => {
                 <Text fontWeight={'bold'}>Specimen Image used:</Text>
               </GridItem>
               <GridItem colStart={2} colSpan={3}>
-
-                {data[0].files && <>
-                  {data[0].files.map((f, index) => (
-                    <>
-                      <img src={URL.createObjectURL(f)}
-                        alt={f.name}
-                        style={{
-                          height: "150px",
-                        }} />
-                    </>
-
-                  )
-                  )}
-                </>
-                }
+              
+                 <img src={data[0].files[1]} alt={'im'} h={'150px'}/> 
+                 
+                
 
 
               </GridItem>
@@ -180,7 +163,7 @@ const Report = (props) => {
 
             {data[1].Class == 'malignant' ?
             <FormControl>
-              <FormLabel htmlFor='dose'>Prescribed dosing</FormLabel>
+              <FormLabel htmlFor='dose'>Prescribed Body Surface Area Dosing :</FormLabel>
               <Text id='dose'>{(Math.pow(parseInt(data[0].PatientHeight),0.725)*Math.pow(parseInt(data[0].PatientWeight),0.425)*0.007184 *1).toFixed(2)} mg</Text>
               </FormControl> : <></>}
               <Center my={'10vh'}> <Text>----End of Report----</Text></Center>
@@ -204,7 +187,7 @@ const Report = (props) => {
         </Flex>
      
 
-        <Button onClick={handlePrint} mx={'auto'}> Save as PDF </Button>
+        <Button onClick={handlePrint} mx={'auto'} bgColor={'teal.200'} my={'2vh'}> Save as PDF </Button>
       </Flex>
     </Layout>
 

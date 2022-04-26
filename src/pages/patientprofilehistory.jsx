@@ -44,7 +44,7 @@ function PatientResults({id,details}) {
     usePagination
   );
 
-  const {pageIndex,pageSize} = state
+  const {pageIndex} = state
 
 
   return (
