@@ -22,6 +22,8 @@ const ClassifierForm = (props) => {
     const [rdate,setDate]=useState('')
     const [error,setError]=useState(false)
 
+
+
     const files = watch(name)
 
     const onDrop = useCallback(
@@ -82,6 +84,7 @@ const ClassifierForm = (props) => {
     const id = watch('MedicalId')
     const type = watch('New_Patient')
     const pname = watch('PatientName')
+    const date= watch('PatientDOB')
     useEffect(() => {
         if (type == 'New') {
             setState(false)
@@ -141,6 +144,29 @@ const ClassifierForm = (props) => {
             }
         }
     }, [id, type])
+
+    useEffect(()=>{
+        let date2=new Date(date)
+
+
+            var month_diff = Date.now() - date2;
+            
+        console.log(month_diff,Date.now())
+            
+            //convert the calculated difference in date format
+            var age_dt = new Date(month_diff); 
+            
+            //extract year from date    
+            var year = age_dt.getUTCFullYear();
+            
+            //now calculate the age of the user
+            var age = Math.abs(year - 1970);
+            setValue('PatientAge',age)
+            
+            console.log(age)
+            
+
+    },[date])
 
     return (
 

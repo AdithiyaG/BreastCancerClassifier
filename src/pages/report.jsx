@@ -166,7 +166,21 @@ const Report = (props) => {
               <FormLabel htmlFor='dose'>Prescribed Body Surface Area Dosing :</FormLabel>
               <Text id='dose'>{(Math.pow(parseInt(data[0].PatientHeight),0.725)*Math.pow(parseInt(data[0].PatientWeight),0.425)*0.007184 *1).toFixed(2)} mg</Text>
               </FormControl> : <></>}
-              <Center my={'10vh'}> <Text>----End of Report----</Text></Center>
+
+              <SimpleGrid columns={6}>
+                <GridItem colStart={5} colSpan={2}>
+                  Dr.John Dubanowski
+                </GridItem>
+                <GridItem colStart={5} colSpan={2}>
+                  ______________________
+                </GridItem>
+                <GridItem colStart={5} colSpan={1} textAlign={'center'}>
+                       Signature
+                </GridItem>
+
+
+              </SimpleGrid>
+              <Center my={'5vh'}> <Text>----End of Report----</Text></Center>
           </Box>
         </div>
         <Flex alignItems={'start'} direction={'column'} mx={'10vw'}>
