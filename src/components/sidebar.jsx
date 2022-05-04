@@ -114,7 +114,7 @@ export default function Sidebar() {
     <Box
       as="section" 
     >
-      <SidebarContent display={{ base: "none", md: "unset" }} />
+      {currentUser!=null ?<SidebarContent display={{ base: "none", md: "unset" }} />:<></>}
       <Drawer
         isOpen={sidebar.isOpen}
         onClose={sidebar.onClose}
@@ -126,7 +126,7 @@ export default function Sidebar() {
           <SidebarContent w="full" borderRight="none" />
         </DrawerContent>
       </Drawer>
-      <Box ml={{ base: 0, md: 60 }}  transition=".3s ease" >
+      <Box ml={{ base: 0, md: 0 }}  transition=".3s ease" >
         <Flex
           as="header"
           align="center"

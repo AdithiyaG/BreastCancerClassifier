@@ -309,7 +309,7 @@ const ClassifierForm = (props) => {
                                 <div
                                     className={" " + (isDragActive ? " " : " ")}
                                 >
-                                    {!files?.length && <p className=" ">Drop the files here ...</p>}
+                                    {!files?.length && <p>Drop the files here ...</p>}
 
                                     {!!files?.length && (
                                         <div className=" ">

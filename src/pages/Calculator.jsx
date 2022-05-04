@@ -29,7 +29,7 @@ const Calculator=()=>{
     console.log(result)
     return(
       <Text p={'3%'} fontSize={'lg'}>
-        Dubois Dose: {result}
+        Recommended Dose to be taken: {result} g
       </Text>
     )
   }

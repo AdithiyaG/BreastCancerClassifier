@@ -1,4 +1,5 @@
 import {HiExternalLink} from 'react-icons/hi';
+import {FaFileDownload} from 'react-icons/fa'
 import { IconButton,Link } from '@chakra-ui/react';
 import axios from 'axios';
 import {path} from './apilink'
@@ -7,15 +8,18 @@ const fetchProducts = (data) => {
   console.log(data)
    axios
    ({
-    url: path+`service1/report/?pid=${data}`, //your url
+    url: path+`service1/report/?pid=${data}`, 
     method: 'GET',
     responseType: 'blob', // important
 })
     .then((response) => {
+      console.log(response)
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
+      const contentDisposition = response.headers['content-disposition'];
+      console.log(contentDisposition,'Content')
       link.href = url;
-      link.setAttribute('download', 'file.pdf'); //or any other extension
+      link.setAttribute('download', contentDisposition+'.pdf'); //or any other extension
       document.body.appendChild(link);
       link.click();
   })
@@ -61,19 +65,16 @@ export const COLUMNS2 = [
     Header: 'Class',
     accessor: 'Class',
   },
-  {
-    Header: 'ImagePath',
-    accessor: 'ImagePath',
-  },
+ 
   {
     Header: 'Date',
     accessor: 'UsedDate'
   },
   {
-    Header:'Download',
+    Header:'Download Report',
     Cell:(props)=>{
       return(
-        <IconButton bgColor={'teal.200'} icon={<HiExternalLink />} onClick={()=>fetchProducts(props.row.original.Id)}></IconButton>
+        <IconButton bgColor={'teal.200'} icon={<FaFileDownload />} onClick={()=>fetchProducts(props.row.original.Id)}></IconButton>
         )
     }
   }

@@ -44,7 +44,7 @@ export default function Homepage() {
           The features of the app help them give a quick and crisp result after the analysis of the cell image
           </Text>
           
-          <Stack spacing={6} direction={'row'}>
+          {/* <Stack spacing={6} direction={'row'}>
             <Button
               rounded={'full'}
               px={6}
@@ -56,7 +56,7 @@ export default function Homepage() {
             <Button rounded={'full'} px={6}>
               Learn more
             </Button>
-          </Stack>
+          </Stack> */}
         </Stack>
         <Woman/>
       </Flex>
