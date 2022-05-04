@@ -10,8 +10,9 @@ import medium from '../media/4.png'
 import { useSelector } from 'react-redux'
 import React, { useRef } from 'react'
 import { useReactToPrint } from "react-to-print";
-
-
+import { useForm } from "react-hook-form";
+import axios from 'axios';
+import { path } from '../components/apilink';
 
 const Report = (props) => {
   
@@ -19,6 +20,9 @@ const Report = (props) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+
+  const { register, handleSubmit } = useForm();
+  
 
   let [specimen, setSpecimen] = React.useState('')
   let [remarks, setRemarks] = React.useState('')
@@ -40,10 +44,40 @@ const Report = (props) => {
     setRemarks(inputValue)
 
   }
-
   const data = useSelector((state) => state.allFormdata.data)
   console.log(data)
-  console.log(data[1].Class,'maligant',data[1].Class=='maligant')
+  const onSubmit = async (values) =>{ 
+    const postclassifierurl = path+`service1/classifier/?pid=${data[1].Id}`
+    const formData = new FormData()
+        formData.append("MedicalId", data[1].MedicalId)
+        formData.append("ImagePath", data[0].files[0])
+        formData.append("Class", data[1].Class)
+        formData.append('UserId', data[1].UserId)
+        formData.append('type',values.type)
+        formData.append('remarks',values.remarks)
+
+        const cresponse = await axios.put(postclassifierurl, formData).catch(err => console.log(err))
+        if (cresponse.status == 201) {
+          console.log("Result updated")
+          axios
+          ({
+           url: path+`service1/report/?pid=${data[1].Id}`, //your url
+           method: 'GET',
+           responseType: 'blob', // important
+       })
+           .then((response) => {
+             const url = window.URL.createObjectURL(new Blob([response.data]));
+             const link = document.createElement('a');
+             link.href = url;
+             link.setAttribute('download', 'file.pdf'); //or any other extension
+             document.body.appendChild(link);
+             link.click();
+         })
+           .catch((err) => {
+             console.log("Err: ", err);
+           });
+        }
+      }
   return (
     <Layout>
       <Flex direction={'column'}>
@@ -186,6 +220,7 @@ const Report = (props) => {
         <Flex alignItems={'start'} direction={'column'} mx={'10vw'}>
         <Text>Specimen</Text>
         <Input
+        {...register("type")}
         onChange={handleInputChange}
         placeholder='Here is a sample placeholder'
         size='sm'
@@ -193,6 +228,7 @@ const Report = (props) => {
           
           <Text>Remarks</Text>
         <Textarea
+        {...register("remarks")}
         onChange={handleRemarkChange}
         placeholder='Here is a sample placeholder'
         size='sm'
@@ -201,7 +237,7 @@ const Report = (props) => {
         </Flex>
      
 
-        <Button onClick={handlePrint} mx={'auto'} bgColor={'teal.200'} my={'2vh'}> Save as PDF </Button>
+        <Button onClick={handleSubmit(onSubmit)} mx={'auto'} bgColor={'teal.200'} my={'2vh'}> Save as PDF </Button>
       </Flex>
     </Layout>
 
