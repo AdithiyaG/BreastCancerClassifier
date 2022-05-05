@@ -202,19 +202,6 @@ const Report = (props) => {
               <Text id='dose'>{(Math.pow(parseInt(data[0].PatientHeight),0.725)*Math.pow(parseInt(data[0].PatientWeight),0.425)*0.007184 *1).toFixed(2)} mg</Text>
               </FormControl> : <></>}
 
-              <SimpleGrid columns={6}>
-                <GridItem colStart={5} colSpan={2}>
-                  Dr.John Dubanowski
-                </GridItem>
-                <GridItem colStart={5} colSpan={2}>
-                  ______________________
-                </GridItem>
-                <GridItem colStart={5} colSpan={1} textAlign={'center'}>
-                       Signature
-                </GridItem>
-
-
-              </SimpleGrid>
               <Center my={'5vh'}> <Text>----End of Report----</Text></Center>
           </Box>
         </div>
